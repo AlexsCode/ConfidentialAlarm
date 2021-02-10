@@ -1,0 +1,20 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "/home/alex/esp/esp-idf/components/bootloader/subproject",
+    "build_dir":          "/home/alex/Code/ConfidentialAlarm/src/build/bootloader",
+    "config_file":        "/home/alex/Code/ConfidentialAlarm/src/sdkconfig",
+    "config_defaults":    "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "v4.1-dirty",
+    "target":             "esp32",
+    "phy_data_partition": "",
+    "monitor_baud" :      "115200",
+    "monitor_toolprefix": "xtensa-esp32-elf-",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "/home/alex/esp/esp-idf/components/efuse/Kconfig;/home/alex/esp/esp-idf/components/esp32/Kconfig;/home/alex/esp/esp-idf/components/esp_common/Kconfig;/home/alex/esp/esp-idf/components/log/Kconfig;/home/alex/esp/esp-idf/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/home/alex/esp/esp-idf/components/bootloader/Kconfig.projbuild;/home/alex/esp/esp-idf/components/esptool_py/Kconfig.projbuild;/home/alex/esp/esp-idf/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp32", "esp_common", "esp_rom", "esptool_py", "log", "main", "micro-ecc", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "/home/alex/esp/esp-idf/components/bootloader", "/home/alex/esp/esp-idf/components/bootloader_support", "/home/alex/esp/esp-idf/components/efuse", "/home/alex/esp/esp-idf/components/esp32", "/home/alex/esp/esp-idf/components/esp_common", "/home/alex/esp/esp-idf/components/esp_rom", "/home/alex/esp/esp-idf/components/esptool_py", "/home/alex/esp/esp-idf/components/log", "/home/alex/esp/esp-idf/components/bootloader/subproject/main", "/home/alex/esp/esp-idf/components/bootloader/subproject/components/micro-ecc", "/home/alex/esp/esp-idf/components/partition_table", "/home/alex/esp/esp-idf/components/soc", "/home/alex/esp/esp-idf/components/spi_flash", "/home/alex/esp/esp-idf/components/xtensa", "" ]
+}
