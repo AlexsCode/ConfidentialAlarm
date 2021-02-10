@@ -5,6 +5,6 @@
 #define LED_PIN GPIO_NUM_2
 
 
-void Status_LED_On(*pvParameter);
+void Status_LED_On();
 
 

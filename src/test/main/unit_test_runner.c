@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "unity.h"
+#include "driver/gpio.h"
 
 static void print_banner(const char* text);
 
