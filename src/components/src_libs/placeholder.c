@@ -1,14 +1,20 @@
-//Placeholder C file.
+/**
+ * @file placeholder.c
+ * @author alex@tuddenham.info 
+ * @brief Holds testable functions used in main code, in dep component to allow for unit testing builds.
+ * @version 0.1
+ * @date 2021-02-11
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #define HIGH 1
 
 
 #include "placeholder.h"
 #include "driver/gpio.h"
-//  #include "nvs_flash.h"
-//  #include "/home/alex/esp/esp-idf/components/nvs_flash/include/nvs_flash.h"
-#include "nvs_flash.h"
-//  #include "../nvs_flash/include/nvs_flash.h"
 
+#include "nvs_flash.h"
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -35,6 +41,11 @@ int status_LED_ON(gpio_num_t gpio)
     return gpio_get_level(gpio);
 }
 
+/**
+ * @brief testing task creation and freeRTOS methods
+ * 
+ * @param pvParameters 
+ */
 void rtos_Test(void *pvParameters)
 {
     
@@ -68,7 +79,7 @@ void nvs_setup()
 void nvs_test()
 {
     printf("Starting of NVS Test\n");
-    nvs_handle_t nvs_handler; //Handler used to ...
+    nvs_handle_t nvs_handler; 
 
     esp_err_t err = nvs_open("test_storage\n",NVS_READWRITE,&nvs_handler); //reads error code if operation fails.
     if(err != ESP_OK)//ESP_OK is Macro 0
@@ -92,12 +103,12 @@ void nvs_test()
 
 }
 
-void nvs_setter( const char * description ,uint32_t value) //parameters to change
+void nvs_setter( const char * description ,uint32_t value) //parameters expected to change
 {
     nvs_handle_t nvs_handler;     
 
     esp_err_t err = nvs_open(description,NVS_READWRITE,&nvs_handler); //reads error code if operation fails.
-    if(err != ESP_OK)//ESP_OK is Macro 0
+    if(err != ESP_OK)
     {
         printf("Error reading NVS, Problem was %s\n",esp_err_to_name(err));
     }
