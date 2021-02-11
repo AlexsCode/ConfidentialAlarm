@@ -27,26 +27,32 @@
 #include "sdkconfig.h"
 
 
-
 #define HIGH 1  
 #define LOW 0
 #define LED_PIN GPIO_NUM_2 //Macro LED pin to onboard LED
-
 #define ADC_PIN ADC2_CH1 //Configured ADC to GPIO 0
-// #define WAKE_PIN ((gpio_num_t)GPIO_NUM_4) // configuring Interupt pin, Accessible via RTC
 #define WAKE_PIN GPIO_NUM_4 // Interupt Pin.
 
+//Setting SSID, PW Memory Locations.
+//To be stored in NVS after creation.
+const char ssid_c = "tempssid";
+uint32 pwd = 0x20;
 
+//RTC fast memory storaged variables, accessible from Deep Sleep.
 RTC_DATA_ATTR bool SleepFlag=false;
 RTC_DATA_ATTR int bootNumber=0;
 
+/**
+ * @brief initialising RTC wake pin and setup.
+ * 
+ * @param pvParameter 
+ */
 void wakePin_Checker(void *pvParameter)
 {
     uint32_t rtc_gpio_get_level(WAKE_PIN);
     
-}
+};
 
-//Creating Flag accessible from RTC memory.
 
 
 /**
@@ -68,29 +74,29 @@ void wakePin_Checker(void *pvParameter)
 //     fflush(stdout); //clears the IO buffer.
 // }
 
+/**
+ * @brief Deep sleep setter, to be called via freeRTOS task.
+ * 
+ * @param pvParameter 
+ */
 void sleepTask(void *pvParameter)
 {
-
-
     //Configure / Offline what is required to sleep.
     esp_sleep_enable_ext0_wakeup(WAKE_PIN,HIGH);
     esp_deep_sleep_start();
 }
 
+/**
+ * @brief deep sleep wake stub, customising the wakeup sequence.
+ * 
+ */
 void RTC_IRAM_ATTR  esp_wake_deep_sleep(void)
 {
     esp_default_wake_deep_sleep();
     static RTC_RODATA_ATTR const char bootstr[] = "wake boot %d\n";
     printf(bootstr,bootNumber); //retrieves and prints from RTC memory Locations.
     fflush(stdout);
-
-
 }
-
-
-// const char SSID = "Hi";
-const char ssid_c = "H";
-uint32 pwd = 0x20;
 
 
 /**
@@ -104,8 +110,7 @@ void app_main(void)
     nvs_test();
 
 
-    //boot loop and Testing routines.
-
+    //boot loop and Testing/debugging routines.
     // print_wakeup();//prints last reason for waking from deepsleep.
     // printf("Boot Count: %d/n",bootNumber++);
     //xTaskCreate(&rtos_Test,"checks if Pin High",2048,NULL,10,NULL);
@@ -117,11 +122,9 @@ void app_main(void)
         fflush(stdout);
 
         xTaskCreate(&sleepTask,"Sending to Sleep",2048,NULL,5,NULL);
-        // xTaskSuspend()
     }
 
     else{
-        //Staying Awake Code.
 
         printf("debugging loop");
         fflush(stdout);
