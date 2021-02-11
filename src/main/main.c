@@ -8,16 +8,24 @@
  * @copyright Copyright (c) 2021
  * 
  */
-//Main Application
 
 #include <stdio.h>
 #include "esp_system.h"
 #include "esp_sleep.h"
+#include "esp_wifi.h"
+#include "esp_event.h"
+
 #include "driver/gpio.h"
+#include "nvs_flash.h"
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/event_groups.h"
+
+//Custom headers
 #include "placeholder.h"
 #include "sdkconfig.h"
+
 
 
 #define HIGH 1  
@@ -25,30 +33,96 @@
 #define LED_PIN GPIO_NUM_2 //Macro LED pin to onboard LED
 
 #define ADC_PIN ADC2_CH1 //Configured ADC to GPIO 0
-#define WAKE_PIN ((gpio_num_t)GPIO_NUM_4) // configuring Interupt pin, Accessible via RTC 
+// #define WAKE_PIN ((gpio_num_t)GPIO_NUM_4) // configuring Interupt pin, Accessible via RTC
+#define WAKE_PIN GPIO_NUM_4 // Interupt Pin.
+
+
+RTC_DATA_ATTR bool SleepFlag=false;
+RTC_DATA_ATTR int bootNumber=0;
+
+void wakePin_Checker(void *pvParameter)
+{
+    uint32_t rtc_gpio_get_level(WAKE_PIN);
+    
+}
 
 //Creating Flag accessible from RTC memory.
-RTC_DATA_ATTR bool SleepFlag=false;
+
+
+/**
+ * @brief Diagnosing last reason for waking.
+ * 
+ */
+// void print_wakeup()
+// {
+//     esp_deep_sleep_wakeup_cause_t wakeup_cause;
+//     wakeup_cause = esp_deep_sleep_get_wakeup_cause();
+    
+//     switch(wakeup_cause)
+//     {
+//         case 1 : printf("Woken by RTC IO - Door Trigger\n");break;
+//         case 2 : printf("Woken by Timer Ending\n");break;
+//         default :
+//             printf("Wakeup Not Caused By Known Deep Sleep: %d\n",wakeup_cause);
+//     }
+//     fflush(stdout); //clears the IO buffer.
+// }
 
 void sleepTask(void *pvParameter)
 {
+
+
     //Configure / Offline what is required to sleep.
     esp_sleep_enable_ext0_wakeup(WAKE_PIN,HIGH);
     esp_deep_sleep_start();
 }
 
-void app_main(void)
+void RTC_IRAM_ATTR  esp_wake_deep_sleep(void)
 {
+    esp_default_wake_deep_sleep();
+    static RTC_RODATA_ATTR const char bootstr[] = "wake boot %d\n";
+    printf(bootstr,bootNumber); //retrieves and prints from RTC memory Locations.
+    fflush(stdout);
+
+
+}
+
+
+// const char SSID = "Hi";
+const char ssid_c = "H";
+uint32 pwd = 0x20;
+
+
+/**
+ * @brief Main Process Runner.
+ * 
+ */
+void app_main(void)
+{   
+    nvs_setup(); //initalises nvs
+    nvs_test(); //testing r & w 
+    nvs_test();
+
+
+    //boot loop and Testing routines.
+
+    // print_wakeup();//prints last reason for waking from deepsleep.
+    // printf("Boot Count: %d/n",bootNumber++);
+    //xTaskCreate(&rtos_Test,"checks if Pin High",2048,NULL,10,NULL);
+    //xTaskCreate(&wakePin_Checker,"checks if Pin High",2048,NULL,10,NULL);
+
+
     if(SleepFlag){
         printf("Creating Sleep Task\n");
         fflush(stdout);
 
         xTaskCreate(&sleepTask,"Sending to Sleep",2048,NULL,5,NULL);
+        // xTaskSuspend()
     }
 
     else{
         //Staying Awake Code.
-        
+
         printf("debugging loop");
         fflush(stdout);
     }
