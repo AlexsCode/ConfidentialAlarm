@@ -3,7 +3,7 @@
  * @author Alex Tuddenham
  * @brief Confidentially alert src main. To trigger an alert when woken from sleep via external stimulus.
  * @version 0.1
- * @date 2021-02-10
+ * @date 2021-02-11
  * 
  * @copyright Copyright (c) 2021
  * 
