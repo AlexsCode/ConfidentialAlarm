@@ -913,6 +913,7 @@
 56617	56630	1612951897506902003	CMakeFiles/src.elf.dir/project_elf_src.c.obj	e477163bad90ae24
 56630	57080	1612951897954914710	src.elf	6534f0d76e713d70
 57080	57225	1612951898102918904	.bin_timestamp	8a19e8441be105fc
+<<<<<<< HEAD
 28	112	1612953059648752296	esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj	698edff960f29a05
 27	114	1612953059648752296	esp-idf/app_update/CMakeFiles/__idf_app_update.dir/esp_app_desc.c.obj	a5d37489df309909
 114	138	1612953059676752571	esp-idf/app_update/libapp_update.a	93a5fba63d6b10ca
@@ -1164,3 +1165,5 @@
 179	897	1612959686645635596	esp-idf/esp32/ld/esp32.project.ld	faa1a2d600dfcd0c
 897	1315	1612959687081642695	src.elf	6534f0d76e713d70
 1315	1465	1612959687233645169	.bin_timestamp	8a19e8441be105fc
+=======
+>>>>>>> origin/main
